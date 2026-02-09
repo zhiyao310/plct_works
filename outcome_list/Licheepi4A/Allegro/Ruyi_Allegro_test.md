@@ -99,6 +99,8 @@ cmake .. \
 
 - CMake 配置报错：`X11 not found. You may need to install X11 development libraries`。
 
+![allegro1_cmake_error.png](https://github.com/zhiyao310/plct_works/blob/main/outcome_list/Licheepi4A/Allegro/images/allegro1_cmake_error.png)
+
 ##### 根因分析（版本设计硬伤）
 
 Allegro 5.2.9 的 Display 模块 CMake 脚本存在设计缺陷：即使显式禁用 X11、启用 FrameBuffer，代码仍会强制执行 X11 检测，且未设置“检测失败则降级到 FrameBuffer”的逻辑——该缺陷无配置项可绕过，仅能通过安装 X11 开发库“妥协”，违背嵌入式纯 FrameBuffer 场景的核心需求。
@@ -172,6 +174,9 @@ Allegro 5.2.9 的 Display 模块 CMake 脚本存在设计缺陷：即使显式�
 
 - 核心突破：X11检测报错彻底解决，编译流程可启动。
 
+![allegro2_cmake_right.png](https://github.com/zhiyao310/plct_works/blob/main/outcome_list/Licheepi4A/Allegro/images/allegro2_cmake_right.png)
+![allegro3_camke_finish.png](https://github.com/zhiyao310/plct_works/blob/main/outcome_list/Licheepi4A/Allegro/images/allegro3_camke_finish.png)
+
 ##### 根因分析
 
 通过`override.cmake`的`FORCE`关键字强制覆盖CMake缓存变量，直接跳过Allegro默认的X11检测逻辑，是本次唯一能突破X11卡点的特殊手段，但仅解决“配置阶段”问题，未触及编译阶段的依赖适配核心。
@@ -198,6 +203,8 @@ make install
    - 连锁错误：因`gl2.h`缺失，`aintern_opengl.h`中依赖的`GLint`/`GLenum`/`GLubyte`等GLES2核心类型未定义，编译返回Error 1/Error 2；
 
    - 即使通过`override.cmake`指定了GLES2库路径，仍无法解决头文件查找问题。
+
+![allegro4_make_finish1.png](https://github.com/zhiyao310/plct_works/blob/main/outcome_list/Licheepi4A/Allegro/images/allegro4_make_finish1.png)
 
 ##### 根因分析
 
