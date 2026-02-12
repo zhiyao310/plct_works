@@ -51,7 +51,7 @@ Jetson Nano的社区活跃度在边缘AI开发板领域处于领先水平，核�
 
 - **国内社区**：CSDN、知乎、电子发烧友等平台设有Jetson专属板块，发帖量聚焦AI项目实战、环境配置、算力优化，其中**CSDN上Jetson Nano相关博文超5000篇**，**知乎相关话题累计浏览量超100万次**，核心解决中文开发者的入门适配问题。
 
-> 参考链接：[CSDN-Jetson Nano板块]([Jetson Nano- CSDN搜索](https://so.csdn.net/so/search?spm=1038.2274.3001.4498&q=Jetson Nano&t=&u=))、[知乎-Jetson Nano话题]([(78 封私信) Jetson Nano - 搜索结果 - 知乎](https://www.zhihu.com/search?q=Jetson Nano&type=content))
+> 参考链接：[Jetson Nano- CSDN搜索](https://so.csdn.net/so/search?spm=1038.2274.3001.4498&q=Jetson%20Nano&t=&u=)、[知乎-Jetson Nano话题](https://www.zhihu.com/search?q=Jetson%20Nano&type=content)
 
 - **国外社区**：**Reddit的r/Jetson板块成员超110k**、**Stack Overflow的Jetson标签累计提问超0.3k**，NVIDIA官方工程师定期参与答疑，内容聚焦AI模型优化、低功耗部署、工业级适配，沉淀了大量英文技术文档与工业项目案例；此外，NVIDIA开发者论坛（Developer Forum）的Jetson板块月均发帖量超3000条。
 
@@ -73,7 +73,7 @@ Jetson Nano的社区活跃度在边缘AI开发板领域处于领先水平，核�
 
 - **技术文档**：官方提供中文+英文双语文档，涵盖开发板硬件手册、原理图、JetPack安装教程、AI模型移植指南、故障排查手册等，文档聚焦AI开发场景，细节详实，配套有官方示例代码与调试工具；文档会同步适配新的AI框架版本（如PyTorch 2.x）。
 
-> 参考链接：[Jetson Nano硬件手册]([Jetson - Embedded AI Computing Platform | NVIDIA Developer](https://developer.nvidia.com/embedded-computing))
+> 参考链接：[Jetson Nano硬件手册](https://developer.nvidia.com/embedded-computing)
 
 - **驱动与工具**：提供Windows/macOS/Linux全系统的Jetson设备管理工具（NVIDIA SDK Manager），自动适配驱动与依赖库，解决环境配置难题；同时提供Jetson Stats工具（监控功耗、算力、温度），帮助开发者优化项目功耗与性能。
 
