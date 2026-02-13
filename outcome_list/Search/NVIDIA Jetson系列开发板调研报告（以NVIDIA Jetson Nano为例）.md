@@ -1,4 +1,4 @@
-# NVIDIA Jetson Nano开发板调研报告
+# NVIDIA Jetson系列开发板调研报告（以NVIDIA Jetson Nano为例）
 
 **目录**
 
