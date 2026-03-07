@@ -1,0 +1,78 @@
+# 检查libgpiod-dev是否安装
+dpkg -l | grep libgpiod-dev
+
+# 若未安装，执行以下命令安装
+sudo apt update && sudo apt install -y libgpiod-dev
+
+# 新建目录（用于存放 RuyiSDK 示例代码，可选，直接在主目录操作可跳过此步）
+mkdir -p ~/ruyi_led_example
+
+# 进入该目录（终端当前目录会切换到这个文件夹，后续所有操作都在此目录下进行）
+cd ~/ruyi_led_example
+
+nano gpio_blink.c
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <gpiod.h>
+
+int main()
+{
+    int i;
+    int ret;
+
+    struct gpiod_chip * chip;
+    struct gpiod_line * line;
+
+    // 打开 GPIO 控制器 1 (对应 GPIO1 组)
+    chip = gpiod_chip_open("/dev/gpiochip1");
+    if(chip == NULL)
+    {
+        printf("gpiod_chip_open error\n");
+        return -1;
+    }
+
+    // 获取 GPIO1 组中的第 3 个引脚 (即 GPIO1_3)
+    line = gpiod_chip_get_line(chip, 3);
+    if(line == NULL)
+    {
+        printf("gpiod_chip_get_line error\n");
+        gpiod_line_release(line);
+    }
+
+    // 申请引脚为输出模式，初始电平为低(0)
+    ret = gpiod_line_request_output(line, "gpio", 0);
+    if(ret < 0)
+    {
+        printf("gpiod_line_request_output error\n");
+        gpiod_chip_close(chip);
+    }
+
+    printf("Starting LED blink on GPIO1_3 (num 427), press Ctrl+C to stop.\n");
+    
+    // 循环闪烁 10 次
+    for(i = 0; i < 10; i++) 
+    {
+        gpiod_line_set_value(line, 1); // 设置高电平，点亮 LED
+        printf("ON\n");
+        sleep(1);                      // 延时 1 秒
+        
+        gpiod_line_set_value(line, 0); // 设置低电平，熄灭 LED
+        printf("OFF\n");
+        sleep(1);                      // 延时 1 秒
+    }
+
+    // 释放资源
+    gpiod_line_release(line);
+    gpiod_chip_close(chip);
+
+    return 0;
+}
+
+cat gpio_blink.c
+
+gcc gpio_blink.c -I /usr/include/ -L /usr/lib/riscv64-linux-gnu/ -lgpiod -o gpio_blink
+ls
+
+sudo ./gpio_blink
