@@ -1,0 +1,50 @@
+## 方法一
+
+#步骤 1：确认系统架构
+uname -m
+dpkg --print-architecture
+
+#步骤 2：更新软件源
+sudo apt update
+
+#步骤 3：安装 cpufetch 包
+sudo apt install cpufetch
+
+#步骤 4：运行
+cpufetch
+
+## 方法二
+
+#步骤 1：安装编译依赖工具
+sudo apt update
+sudo apt install -y git gcc make
+#验证依赖是否安装成功：
+gcc --version 
+make --version 
+
+#步骤 2：克隆 cpufetch 源码仓库
+git clone https://github.com/Dr-Noob/cpufetch.git
+cd cpufetch
+
+#步骤 3：直接编译
+make
+#编译过程中若出现报错（如 “找不到 stdio.h”）,大概率是缺少 libc 开发库，补充安装：
+sudo apt install -y libc6-dev
+make clean && make # 清理后重新编译
+
+#步骤 4：运行本地编译版本
+./cpufetch
+
+## 进阶用法
+
+#1. 自定义配色方案
+# 使用预设配色
+cpufetch --color arm
+# 自定义 RGB 配色
+cpufetch --color 239,90,45:210,200,200:0,0,0:100,200,45:0,200,200
+
+#2. 切换 Logo 显示风格
+cpufetch --style retro
+
+#3. 显示完整 CPU 名称
+cpufetch -F
