@@ -1,20 +1,5 @@
 # 使用 cpufetch 查看 RISC-V CPU 信息(基于Licheepi4A)
 
-## 一、简介
-
-`cpufetch` 是一款简洁美观的系统工具，能够以图文并茂的方式显示当前设备的 CPU 详细信息，包括：
-
-- 制造商与微架构
-- 核心数与频率
-- 指令集扩展（如 RISC-V 的 RV64GC、Vector 扩展等）
-- 各级缓存大小
-
-从 1.04 版本开始，`cpufetch` 增加了对 RISC-V 架构的原生支持，后续版本（≥1.05）进一步优化了微架构检测和多字母扩展的识别，因此非常适合在 LicheePi 4A（搭载 T-Head TH1520 处理器）上展示完整的 CPU 信息。
-
-本文档提供两种安装方式：**通过 RevyOS 软件源直接安装（推荐）** 和 **从 GitHub 源码编译安装**。用户可根据需要选择。
-
-## 二、安装方法
-
 ### 方法一：通过 apt 包管理器安装（推荐）
 
 RevyOS 官方在 `revyos-addons` 软件源中提供了 riscv64 架构的 cpufetch 预编译包，可直接通过 apt 安装，步骤如下：
@@ -25,9 +10,7 @@ RevyOS 官方在 `revyos-addons` 软件源中提供了 riscv64 架构的 cpufetc
 
 ```bash
 uname -m
-# 期望输出：riscv64
 dpkg --print-architecture
-# 期望输出：riscv64
 ```
 
 ![image-20260311184334622](./images/image-20260311184334622.png)
@@ -79,9 +62,7 @@ sudo apt install -y git gcc make
 
   ```bash
   gcc --version 
-  # 应输出 GCC 版本
   make --version 
-  # 应输出 Make 版本
   ```
 
 ![image-20260311185248260](./images/image-20260311185248260.png)
@@ -139,7 +120,7 @@ make
 
 ![image-20260311185936720](./images/image-20260311185936720.png)
 
-## 三、进阶用法
+## 进阶用法
 
 cpufetch 支持多种自定义参数，可满足个性化的使用需求，以下为常用进阶用法：
 
@@ -199,10 +180,3 @@ cpufetch 支持多种自定义参数，可满足个性化的使用需求，以�
 
 ![image-20260311190207175](./images/image-20260311190207175.png)
 
-## 四、 注意事项
-
-1. 源码编译时若出现依赖缺失报错，需根据终端提示补充对应开发库（如 libc6-dev）；
-
-2. 自定义配色时，RGB 数值需在 0-255 范围内，否则可能导致配色失效；
-
-3. 不同 RISC-V 芯片的信息展示内容可能略有差异，属正常现象。
