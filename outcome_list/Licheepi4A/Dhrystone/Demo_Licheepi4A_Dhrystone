@@ -1,0 +1,45 @@
+## RuyiSDK 环境搭建
+
+#更新 Ruyi 索引并安装工具链
+ruyi update
+ruyi install gnu-plct-xthead
+#创建并激活 Ruyi 虚拟环境
+ruyi venv -t gnu-plct-xthead sipeed-lpi4a dhrystone-venv
+cd dhrystone-venv
+source ./bin/ruyi-activate
+#验证工具链
+riscv64-plctxthead-linux-gnu-gcc --version
+
+## 编译和运行
+#获取 Dhrystone 源码
+mkdir -p ~/projects/dhrystone && cd ~/projects/dhrystone
+
+git clone https://github.com/Keith-S-Thompson/dhrystone.git
+cd dhrystone
+cd v2.1
+
+#编译 Dhrystone
+
+#首先用` nano `打开 `dhry_1.c`：
+nano dhry_1.c
+#使用键盘方向键将光标移动到 `#include "dhry.h"` 这一行的**下方**（通常是第 18 行或第 19 行附近）。然后在新的一行中依次输入以下内容：
+#include <stdlib.h>
+#按下 `Ctrl+O` 保存文件（按回车确认文件名），然后按 `Ctrl+X` 退出 nano。
+
+#删除冲突的旧式函数声明
+sed -i '/extern char.*malloc/d' dhry_1.c
+sed -i '/extern  int.*times/d' dhry_1.c
+
+#修正重复包含头文件的问题
+cat -n dhry_1.c | head -20
+
+#调整循环次数
+#用` nano` 打开 `dhry_1.c`，找到 `#define Number_Of_Runs 50000`，将其改为
+#define Number_Of_Runs 500000
+#按下 `Ctrl+O` 保存文件（按回车确认文件名），然后按 `Ctrl+X` 退出 nano。
+
+#编译
+riscv64-plctxthead-linux-gnu-gcc -std=gnu90 -O2 -DNOENUM -DTIMES -DHZ=100 -o dhrystone dhry_1.c dhry_2.c -lm
+
+## 运行 Dhrystone 基准测试
+./dhrystone
