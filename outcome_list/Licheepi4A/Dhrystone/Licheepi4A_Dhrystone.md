@@ -98,6 +98,8 @@ nano dhry_1.c
 
 按下 `Ctrl+O` 保存文件（按回车确认文件名），然后按 `Ctrl+X` 退出 nano。
 
+![image-20260316130902340](./images/image-20260316130902340.png)
+
 ### 2.2 删除冲突的旧式函数声明
 
 继续使用 nano 编辑 `dhry_1.c`（或使用 sed 快速删除）。找到包含 `extern char *malloc` 和 `extern int times` 的行，将它们删除或注释掉。也可以使用以下 sed 命令自动删除：
@@ -106,8 +108,6 @@ nano dhry_1.c
 sed -i '/extern char.*malloc/d' dhry_1.c
 sed -i '/extern  int.*times/d' dhry_1.c
 ```
-
-![image-20260316130902340](./images/image-20260316130902340.png)
 
 ![image-20260316131240955](./images/image-20260316131240955.png)
 
