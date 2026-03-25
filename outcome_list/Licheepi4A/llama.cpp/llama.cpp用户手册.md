@@ -1,25 +1,41 @@
 # 使用 Ruyi 工具链在 LicheePi 4A 上编译并运行 llama.cpp
 
-本教程旨在演示如何使用 RuyiSDK 的 `gnu-plct-xthead` 工具链（针对 T-Head CPU 架构优化）编译官方 `llama.cpp`，并在 LicheePi 4A 上进行 AI 推理测试。
+## 环境说明
 
-#### **1. 创建并激活 ruyi 虚拟环境**
+- 硬件环境：Licheepi 4A 开发板（th1520）
+- 软件环境：Debian/openEuler for RISC-V
+- 源码仓库：https://github.com/ggml-org/llama.cpp
+
+## 一、Ruyi环境搭建
+
+#### 更新 Ruyi 索引并安装工具链
+
+```bash
+ruyi update
+ruyi install gnu-plct-xthead
+```
+
+#### 创建并激活 Ruyi 虚拟环境
 
 ```bash
 # 创建虚拟环境：指定工具链+目标开发板+环境名称
 ruyi venv -t gnu-plct-xthead sipeed-lpi4a llama-env
 
+# 进入虚拟环境目录
+cd llama-env
+
 # 激活虚拟环境
-source llama-env/bin/ruyi-activate
+source ./bin/ruyi-activate
 ```
 
-#### **2. 验证工具链版本**
+#### 验证GCC版本
 
 ```bash
-# 查看 GCC 版本
 riscv64-plctxthead-linux-gnu-gcc --version
+make --version
 ```
 
-#### **3. 获取示例源码并编译**
+## 二、获取 llama.cpp 源码并编译
 
 ```bash
 # 克隆 llama.cpp 仓库
@@ -46,9 +62,9 @@ make \
   -j$(nproc)
 ```
 
-#### **4. 模型下载与运行测试**
+## **三、模型下载与运行测试**
 
-**4.1 下载模型文件**
+#### 下载模型文件
 
 ```bash
 # 创建模型目录
@@ -58,7 +74,7 @@ mkdir -p models
 wget -O models/qwen-1.5b-q4.gguf "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/resolve/main/qwen2.5-1b-instruct-q4_k_m.gguf"
 ```
 
-**4.2 运行推理测试**
+#### 运行推理测试
 
 ```bash
 # 运行推理测试
@@ -73,7 +89,7 @@ wget -O models/qwen-1.5b-q4.gguf "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instr
     -t 4
 ```
 
-#### **5. 返回上级目录并退出工具链虚拟环境**
+## 四、 返回上级目录并退出工具链虚拟环境
 
 ```bash
 # 返回上级目录
