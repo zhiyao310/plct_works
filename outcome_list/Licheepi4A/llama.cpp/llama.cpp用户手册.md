@@ -11,7 +11,7 @@
 #### 更新 Ruyi 索引并安装工具链
 
 ```bash
-ruyi update
+sudo apt update && sudo apt install -y cmake
 ruyi install gnu-plct-xthead
 ```
 
@@ -37,41 +37,51 @@ make --version
 
 ## 二、获取 llama.cpp 源码并编译
 
+#### 获取官方 llama.cpp 源码
+
 ```bash
 # 克隆 llama.cpp 仓库
 git clone https://github.com/ggml-org/llama.cpp
 cd llama.cpp
-
-# 配置环境变量，使用 Ruyi 提供的工具链
-export CC=riscv64-plctxthead-linux-gnu-gcc
-export CXX=riscv64-plctxthead-linux-gnu-g++
-
-# 开始编译
-# -j$(nproc) 表示使用所有 CPU 核心加速编译
-make -j$(nproc)
 ```
 
+#### CMake编译
+
 ```bash
-# 编译命令：关闭RVV1.0，兼容TH1520 RVV0p7
-make \
-  CC=riscv64-plctxthead-linux-gnu-gcc \
-  CXX=riscv64-plctxthead-linux-gnu-g++ \
-  CFLAGS="-march=rv64gcxthead -mabi=lp64d -O3 -ffast-math" \
-  CXXFLAGS="-march=rv64gcxthead -mabi=lp64d -O3 -ffast-math" \
-  LLAMA_RVV=0 \
-  -j$(nproc)
+# 创建编译目录
+mkdir build && cd build
+
+# CMake配置
+cmake .. \
+  -DCMAKE_C_COMPILER=riscv64-plctxthead-linux-gnu-gcc \
+  -DCMAKE_CXX_COMPILER=riscv64-plctxthead-linux-gnu-g++ \
+  -DCMAKE_SYSTEM_NAME=Linux \
+  -DCMAKE_SYSTEM_PROCESSOR=riscv64 \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DBUILD_SHARED_LIBS=OFF \
+  -DGGML_RVV=OFF \
+  -DGGML_RV_ZFH=OFF \
+  -DGGML_RV_ZVFH=OFF \
+  -DGGML_XTHEADVECTOR=OFF
+
+# 编译
+cmake --build . --config Release -j$(nproc)
 ```
 
 ## **三、模型下载与运行测试**
 
-#### 下载模型文件
+#### 下载适配 LicheePi 4A 的轻量中文模型
 
 ```bash
+# 回到llama.cpp根目录
+cd ..
+
 # 创建模型目录
 mkdir -p models
 
-# 下载 Qwen2.5-1.5B-Instruct 的 Q4 量化模型 (约 1GB)
-wget -O models/qwen-1.5b-q4.gguf "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/resolve/main/qwen2.5-1b-instruct-q4_k_m.gguf"
+# 下载 Qwen2.5-0.5B 模型（约 400MB）
+wget -O models/qwen-0.5b-q5.gguf \
+  "https://hf-mirror.com/Qwen/Qwen2.5-0.5B-Instruct-GGUF/resolve/main/qwen2.5-0.5b-instruct-q5_k_m.gguf"
 ```
 
 #### 运行推理测试
@@ -83,10 +93,66 @@ wget -O models/qwen-1.5b-q4.gguf "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instr
 # -n: 生成的最大 token 数
 # -t: 使用线程数 (建议根据 TH1520 核心数调整，如 4)
 
-./llama-cli -m models/qwen-1.5b-q4.gguf \
-    -p "你好，请用一句话介绍 RISC-V 架构。" \
-    -n 64 \
-    -t 4
+./build/bin/llama-cli \
+    -m models/qwen-0.5b-q5.gguf \
+    -p "Explain RISC-V briefly." \
+    -n 32 \
+    -t 2
+```
+
+#### 输出结果
+
+```bash
+Â«Ruyi llama-envÂ» debian@revyos-lpi4a:~/llama-env/llama.cpp./build/bin/llama-cli \ \
+    -m models/qwen-0.5b-q5.gguf \
+    -p "Explain RISC-V briefly." \
+    -n 32 \
+    -t 2
+
+Loading model...  
+
+
+â
+ â
+   â
+    â
+
+ââ ââ
+ââ ââ  ââââ
+            ââââ
+                ââââ
+                      ââââ
+                              â
+                               ââââ âââââ
+                                          âââââ
+
+ââ ââ â
+       ââââ ââ ââ ââ â
+                      ââââ    ââ    ââ ââ ââ ââ
+ââ ââ âââ
+         ââ ââ ââ ââ âââ
+                        ââ ââ âââââ âââââ âââââ
+                                    ââ    ââ
+                                    ââ    ââ
+
+build      : b8508-9f102a140
+model      : qwen-0.5b-q5.gguf
+modalities : text
+
+available commands:
+  /exit or Ctrl+C     stop or exit
+  /regen              regenerate the last response
+  /clear              clear the chat history
+  /read               add a text file
+
+
+> Explain RISC-V briefly.
+
+RISC-V is a microarchitecture designed by the ARM Corporation to make embedded devices more energy-efficient. Unlike traditional x86 architecture, which uses a wide range
+
+[ Prompt: 1.7 t/s | Generation: 1.3 t/s ]
+
+> 
 ```
 
 ## 四、 返回上级目录并退出工具链虚拟环境
