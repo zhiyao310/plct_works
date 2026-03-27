@@ -27,6 +27,7 @@ cd llama-env
 # 激活虚拟环境
 source ./bin/ruyi-activate
 ```
+![1虚拟环境](https://github.com/zhiyao310/plct_works/blob/main/outcome_list/Licheepi4A/llama.cpp/images/1%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83.png)
 
 #### 验证GCC版本
 
@@ -34,6 +35,7 @@ source ./bin/ruyi-activate
 riscv64-plctxthead-linux-gnu-gcc --version
 make --version
 ```
+![2版本测试](https://github.com/zhiyao310/plct_works/blob/main/outcome_list/Licheepi4A/llama.cpp/images/2%E7%89%88%E6%9C%AC%E6%B5%8B%E8%AF%95.png)
 
 ## 二、获取 llama.cpp 源码并编译
 
@@ -44,6 +46,7 @@ make --version
 git clone https://github.com/ggml-org/llama.cpp
 cd llama.cpp
 ```
+![3克隆](https://github.com/zhiyao310/plct_works/blob/main/outcome_list/Licheepi4A/llama.cpp/images/3%E5%85%8B%E9%9A%86.png)
 
 #### CMake编译
 
@@ -67,6 +70,8 @@ cmake .. \
 # 编译
 cmake --build . --config Release -j$(nproc)
 ```
+![4编译](https://github.com/zhiyao310/plct_works/blob/main/outcome_list/Licheepi4A/llama.cpp/images/4%E7%BC%96%E8%AF%91.png)
+
 
 ## **三、模型下载与运行测试**
 
@@ -99,6 +104,7 @@ wget -O models/qwen-0.5b-q5.gguf \
     -n 32 \
     -t 2
 ```
+![5运行测试](https://github.com/zhiyao310/plct_works/blob/main/outcome_list/Licheepi4A/llama.cpp/images/5%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95.png)
 
 #### 输出结果
 
@@ -164,3 +170,4 @@ cd ..
 # 退出 Ruyi 虚拟环境
 ruyi-deactivate
 ```
+![6退出](https://github.com/zhiyao310/plct_works/blob/main/outcome_list/Licheepi4A/llama.cpp/images/6%E9%80%80%E5%87%BA.png)
