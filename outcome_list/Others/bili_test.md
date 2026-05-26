@@ -23,7 +23,7 @@
 
 5. *注意：下载后的文件名可能较长，建议先重命名为简单的英文名（如 `0514test.mp4`），方便后续命令行操作。*
 
-   ![image-20260515143235785](./images/image-20260515143235785.png)
+   ![image-20260515143235785](https://github.com/zhiyao310/plct_works/blob/main/outcome_list/Others/images/image-20260515143235785.png)
 
 ---
 
@@ -40,7 +40,7 @@
    - `w`：选区的宽度（像素）
    - `h`：选区的高度（像素）
 5. **记录坐标**：将这四个数值记录下来，这就是 FFmpeg `delogo` 滤镜所需的核心参数。
-   ![image-20260515143633766](./images/image-20260515143636289.png)
+   ![image-20260515143633766](https://github.com/zhiyao310/plct_works/blob/main/outcome_list/Others/images/image-20260515143633766.png)
 
 ---
 
@@ -54,10 +54,10 @@
 ffmpeg -i 0514test.mp4 -vf delogo=x=6:y=16:w=436:h=88 0514test_1.mp4
 ```
 
-![image-20260515144458601](./images/image-20260515144458601.png)      
+![image-20260515144458601](https://github.com/zhiyao310/plct_works/blob/main/outcome_list/Others/images/image-20260515144458601.png)      
 ---
 
-![image-20260515144714670](./images/image-20260515144714670.png)
+![image-20260515144714670](https://github.com/zhiyao310/plct_works/blob/main/outcome_list/Others/images/image-20260515144714670.png)
 
 ## 五、 第四步：视频深度编辑
 
@@ -68,7 +68,7 @@ B站的查重不仅是查水印，更核心的是“画面抽帧比对”和“�
 3. **中间变速**：选中主视频，选择“变速”，建议 **1.2x 或 1.3x**。
 4. **加入背景音**：添加新的 BGM，改变整体音频指纹。
 5. 上传/导出视频。
-   ![image-20260515144548961](./images/image-20260515144548961.png)
+   ![image-20260515144548961](https://github.com/zhiyao310/plct_works/blob/main/outcome_list/Others/images/image-20260515144548961.png)
 
 上述操作可保证视频的成功发布，但如果只做了上述步骤，对于大批量搬运视频后容易面临：**审核秒过，但限流。**
 
