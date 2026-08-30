@@ -155,7 +155,7 @@ mmu     : sv39
 
 屏幕录像（从刷写镜像到登录系统）：
 
-[![asciicast](images/1264225.svg+xml)](https://asciinema.org/a/1264225)
+[![asciicast](https://asciinema.org/a/1264225.svg)](https://asciinema.org/a/1264225)
 
 ## 测试判定标准
 
